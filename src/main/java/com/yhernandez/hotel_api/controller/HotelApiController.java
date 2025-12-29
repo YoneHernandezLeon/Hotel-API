@@ -11,21 +11,18 @@ import com.yhernandez.hotel_api.dto.CreateHotelDTO;
 import com.yhernandez.hotel_api.services.HotelApiService;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/hotels")
+@AllArgsConstructor
 public class HotelApiController {
 
-        private final HotelApiService hotelApiService;
+    private final HotelApiService hotelApiService;
 
-        public HotelApiController(HotelApiService hotelApiService){
-                this.hotelApiService = hotelApiService;
-        }
-
-        @PostMapping
-        @ResponseStatus(HttpStatus.CREATED)
-        public void createHotel(@Valid @RequestBody CreateHotelDTO dto) {
-                hotelApiService.createHotel(dto);
-        }
-        
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createHotel(@Valid @RequestBody CreateHotelDTO dto) {
+        hotelApiService.createHotel(dto);
+    }
 }

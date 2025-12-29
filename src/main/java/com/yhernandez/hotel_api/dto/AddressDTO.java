@@ -1,7 +1,9 @@
 package com.yhernandez.hotel_api.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
 
+@Getter
 public class AddressDTO {
 
     @NotBlank
@@ -15,21 +17,4 @@ public class AddressDTO {
 
     @NotBlank
     private String zipCode;
-
-    
-    public String getStreet() {
-        return street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
 }

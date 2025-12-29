@@ -5,7 +5,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 
+@Getter
 public class CreateHotelDTO {
 
     @NotBlank
@@ -18,17 +20,4 @@ public class CreateHotelDTO {
     @Valid
     @NotNull
     private AddressDTO address;
-
-    public String getName() {
-        return name;
-    }
-
-    public int getStars() {
-        return stars;
-    }
-
-    public AddressDTO getAddress() {
-        return address;
-    }
-
 }
