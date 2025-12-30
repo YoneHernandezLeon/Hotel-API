@@ -1,6 +1,5 @@
 package com.yhernandez.hotel_api.controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class HotelApiController {
 
     @PostMapping
     public ResponseEntity<Map<String, String>> createHotel(@Valid @RequestBody CreateHotelDTO dto) {
-        
+
         Map<String, String> createdHotel = hotelApiService.createHotel(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHotel);
     }

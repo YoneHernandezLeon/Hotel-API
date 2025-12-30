@@ -51,8 +51,8 @@ public class HotelApiControllerTest {
 
         when(hotelApiService.createHotel(any()))
                 .thenReturn(Map.of(
-                                "id", "1",
-                                "hotel_name", "Hotel Gran Canaria"));
+                        "id", "1",
+                        "hotel_name", "Hotel Gran Canaria"));
 
         mockMvc.perform(post("/hotels")
                 .content(body)
