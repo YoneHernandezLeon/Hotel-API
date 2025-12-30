@@ -24,10 +24,10 @@ public class HotelApiService {
                 dto.getAddress().getCountry(),
                 dto.getAddress().getZipCode());
 
-        hotelApiRepository.save(hotel);
+        HotelEntity savedHotel = hotelApiRepository.save(hotel);
 
         return Map.of(
-                "id", hotel.getId().toString(),
-                "hotel_name", hotel.getName());
+                "id", savedHotel.getId().toString(),
+                "hotel_name", savedHotel.getName());
     }
 }
