@@ -1,5 +1,6 @@
 package com.yhernandez.hotel_api.services;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,9 @@ public class HotelApiService {
                 .body(Map.of(
                         "id", hotel.getId(),
                         "hotel_name", hotel.getName()));
+    }
+
+    public List<HotelEntity> listHotels() {
+        return hotelApiRepository.findAll();
     }
 }

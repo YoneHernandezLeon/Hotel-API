@@ -13,6 +13,7 @@ import com.yhernandez.hotel_api.services.HotelApiService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,5 +63,15 @@ public class HotelApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().json(responseBody));
+    }
+
+    @Test
+    void shouldListHotels() throws Exception {
+
+        when(hotelApiService.listHotels())
+                .thenReturn(null);
+
+        mockMvc.perform(get("/hotels"))
+                .andExpect(status().isOk());
     }
 }
