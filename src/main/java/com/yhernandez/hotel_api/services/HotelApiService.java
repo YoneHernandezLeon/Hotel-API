@@ -59,4 +59,12 @@ public class HotelApiService {
             "new_zipCode", savedHotel.getZipCode()
         );
     }
+
+    public void deleteHotel(Long id){
+        if (!hotelApiRepository.existsById(id)) {
+            throw new EntityNotFoundException("Hotel not found");
+        }
+
+        hotelApiRepository.deleteById(id);
+    }
 }
