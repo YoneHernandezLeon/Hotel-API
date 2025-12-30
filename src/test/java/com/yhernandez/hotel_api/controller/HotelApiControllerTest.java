@@ -64,7 +64,7 @@ public class HotelApiControllerTest {
     @Test
     void shouldListHotels() throws Exception {
 
-        when(hotelApiService.listHotels())
+        when(hotelApiService.listHotels(any()))
                 .thenReturn(null);
 
         mockMvc.perform(get("/hotels"))

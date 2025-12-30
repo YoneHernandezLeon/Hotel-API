@@ -32,7 +32,10 @@ public class HotelApiService {
                 "hotel_name", savedHotel.getName());
     }
 
-    public List<HotelEntity> listHotels() {
-        return hotelApiRepository.findAll();
+    public List<HotelEntity> listHotels(String city) {
+        if (city == null || city.isBlank()) {
+            return hotelApiRepository.findAll();
+        }
+        return hotelApiRepository.findByCityIgnoreCase(city);
     }
 }
