@@ -1,5 +1,9 @@
 package com.yhernandez.hotel_api.services;
 
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.yhernandez.hotel_api.dto.CreateHotelDTO;
@@ -14,7 +18,7 @@ public class HotelApiService {
 
     private final HotelApiRepository hotelApiRepository;
 
-    public void createHotel(CreateHotelDTO dto) {
+    public ResponseEntity<Object> createHotel(CreateHotelDTO dto) {
         HotelEntity hotel = new HotelEntity(null, dto.getName(),
                 dto.getStars(),
                 dto.getAddress().getStreet(),
@@ -23,5 +27,11 @@ public class HotelApiService {
                 dto.getAddress().getZipCode());
 
         hotelApiRepository.save(hotel);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of(
+                        "id", hotel.getId(),
+                        "hotel_name", hotel.getName()));
     }
 }
