@@ -3,9 +3,7 @@ package com.yhernandez.hotel_api.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -52,11 +50,9 @@ public class HotelApiControllerTest {
                 """;
 
         when(hotelApiService.createHotel(any()))
-                .thenReturn(ResponseEntity
-                        .status(HttpStatus.CREATED)
-                        .body(Map.of(
+                .thenReturn(Map.of(
                                 "id", "1",
-                                "hotel_name", "Hotel Gran Canaria")));
+                                "hotel_name", "Hotel Gran Canaria"));
 
         mockMvc.perform(post("/hotels")
                 .content(body)

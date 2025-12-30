@@ -1,6 +1,10 @@
 package com.yhernandez.hotel_api.controller;
 
+
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +28,10 @@ public class HotelApiController {
     private final HotelApiService hotelApiService;
 
     @PostMapping
-    public ResponseEntity<Object> createHotel(@Valid @RequestBody CreateHotelDTO dto) {
-        return hotelApiService.createHotel(dto);
+    public ResponseEntity<Map<String, String>> createHotel(@Valid @RequestBody CreateHotelDTO dto) {
+        
+        Map<String, String> createdHotel = hotelApiService.createHotel(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHotel);
     }
 
     @GetMapping
