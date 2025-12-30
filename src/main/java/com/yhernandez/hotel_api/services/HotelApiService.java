@@ -34,4 +34,8 @@ public class HotelApiService {
                         "id", hotel.getId(),
                         "hotel_name", hotel.getName()));
     }
+
+    public ResponseEntity<Object> listHotels() {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+    }
 }
