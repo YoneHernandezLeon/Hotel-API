@@ -37,6 +37,6 @@ public class HotelApiService {
     }
 
     public List<HotelEntity> listHotels() {
-        return null;
+        return hotelApiRepository.findAll();
     }
 }
