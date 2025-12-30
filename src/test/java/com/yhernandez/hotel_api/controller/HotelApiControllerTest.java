@@ -69,7 +69,7 @@ public class HotelApiControllerTest {
     void shouldListHotels() throws Exception {
 
         when(hotelApiService.listHotels())
-                .thenReturn(ResponseEntity.ok(null));
+                .thenReturn(null);
 
         mockMvc.perform(get("/hotels"))
                 .andExpect(status().isOk());
