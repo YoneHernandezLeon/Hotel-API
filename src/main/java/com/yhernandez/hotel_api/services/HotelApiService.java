@@ -61,6 +61,10 @@ public class HotelApiService {
     }
 
     public void deleteHotel(Long id){
-        return;
+        if (!hotelApiRepository.existsById(id)) {
+            throw new EntityNotFoundException("Hotel not found");
+        }
+
+        hotelApiRepository.deleteById(id);
     }
 }
