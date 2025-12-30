@@ -1,5 +1,6 @@
 package com.yhernandez.hotel_api.services;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -29,5 +30,9 @@ public class HotelApiService {
         return Map.of(
                 "id", savedHotel.getId().toString(),
                 "hotel_name", savedHotel.getName());
+    }
+
+    public List<HotelEntity> listHotels() {
+        return hotelApiRepository.findAll();
     }
 }
