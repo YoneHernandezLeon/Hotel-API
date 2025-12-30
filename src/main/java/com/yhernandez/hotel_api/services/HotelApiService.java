@@ -59,4 +59,8 @@ public class HotelApiService {
             "new_zipCode", savedHotel.getZipCode()
         );
     }
+
+    public void deleteHotel(Long id){
+        return;
+    }
 }

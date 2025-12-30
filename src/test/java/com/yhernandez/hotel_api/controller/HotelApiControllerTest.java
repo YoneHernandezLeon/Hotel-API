@@ -10,7 +10,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.yhernandez.hotel_api.services.HotelApiService;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -107,5 +109,14 @@ public class HotelApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
+    }
+
+    @Test
+    void shouldDeleteHotel() throws Exception {
+
+        doNothing().when(hotelApiService).deleteHotel(1L);
+
+        mockMvc.perform(delete("/hotels/1"))
+                .andExpect(status().isNoContent());
     }
 }
