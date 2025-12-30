@@ -12,6 +12,7 @@ import com.yhernandez.hotel_api.services.HotelApiService;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,5 +70,42 @@ public class HotelApiControllerTest {
 
         mockMvc.perform(get("/hotels"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldUpdateHotel() throws Exception {
+
+        String body = """
+                {
+                    "street": "Av. de Las Canteras 123",
+                    "city": "Las Palmas de Gran Canaria",
+                    "country": "España",
+                    "zipCode": "35010"
+                }
+                """;
+
+        String responseBody = """
+                {
+                    "id": "1",
+                    "new_street": "Av. de Las Canteras 123",
+                    "new_city": "Las Palmas de Gran Canaria",
+                    "new_country": "España",
+                    "new_zipCode": "35010"
+                }
+                """;
+
+        when(hotelApiService.updateHotelAddress(any(), any()))
+                .thenReturn(Map.of(
+                        "id", "1",
+                        "new_street", "Av. de Las Canteras 123",
+                        "new_city", "Las Palmas de Gran Canaria",
+                        "new_country", "España",
+                        "new_zipCode", "35010"));
+
+        mockMvc.perform(patch("/hotels/1")
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
     }
 }
