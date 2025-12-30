@@ -20,6 +20,7 @@ import com.yhernandez.hotel_api.dto.CreateHotelDTO;
 import com.yhernandez.hotel_api.entity.HotelEntity;
 import com.yhernandez.hotel_api.services.HotelApiService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -47,6 +48,11 @@ public class HotelApiController {
     public ResponseEntity<Map<String, String>> updateHotelAddress(@PathVariable Long id,
             @Valid @RequestBody AddressDTO dto) {
 
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+        try {
+            Map<String, String> updatedHotel = hotelApiService.updateHotelAddress(id, dto);
+            return ResponseEntity.ok(updatedHotel);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }

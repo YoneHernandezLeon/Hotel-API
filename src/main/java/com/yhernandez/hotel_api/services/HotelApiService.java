@@ -10,6 +10,7 @@ import com.yhernandez.hotel_api.dto.CreateHotelDTO;
 import com.yhernandez.hotel_api.entity.HotelEntity;
 import com.yhernandez.hotel_api.repository.HotelApiRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -40,7 +41,22 @@ public class HotelApiService {
         return hotelApiRepository.findByCityIgnoreCase(city);
     }
 
-    public Map<String, String> updateHotelAddress(Long hotelId, AddressDTO dto){
-        return Map.of("", "");
+    public Map<String, String> updateHotelAddress(Long hotelId, AddressDTO dto) {
+        HotelEntity hotel = hotelApiRepository.findById(hotelId)
+                .orElseThrow(() -> new EntityNotFoundException("Hotel not found"));
+
+        hotel.setStreet(dto.getStreet());
+        hotel.setCity(dto.getCity());
+        hotel.setCountry(dto.getCountry());
+        hotel.setZipCode(dto.getZipCode());
+
+        HotelEntity savedHotel = hotelApiRepository.save(hotel);
+        return Map.of(
+            "id", savedHotel.getId().toString(),
+            "new_street", savedHotel.getStreet(),
+            "new_city", savedHotel.getCity(),
+            "new_country", savedHotel.getCountry(),
+            "new_zipCode", savedHotel.getZipCode()
+        );
     }
 }
