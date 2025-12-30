@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.yhernandez.hotel_api.dto.AddressDTO;
 import com.yhernandez.hotel_api.dto.CreateHotelDTO;
 import com.yhernandez.hotel_api.entity.HotelEntity;
 import com.yhernandez.hotel_api.repository.HotelApiRepository;
@@ -37,5 +38,9 @@ public class HotelApiService {
             return hotelApiRepository.findAll();
         }
         return hotelApiRepository.findByCityIgnoreCase(city);
+    }
+
+    public Map<String, String> updateHotelAddress(Long hotelId, AddressDTO dto){
+        return Map.of("", "");
     }
 }
