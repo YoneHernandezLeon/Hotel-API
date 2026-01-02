@@ -3,6 +3,8 @@ package com.yhernandez.hotel_api.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -11,6 +13,7 @@ import com.yhernandez.hotel_api.entity.HotelEntity;
 import com.yhernandez.hotel_api.services.HotelApiService;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -18,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -74,12 +78,15 @@ public class HotelApiControllerTest {
 	@Test
 	void shouldListHotels() throws Exception {
 
-		when(hotelApiService.listHotels(any()))
-				.thenReturn(List.of());
+		Page<HotelEntity> emptyPage = new PageImpl<>(List.of());
+
+		when(hotelApiService.listHotels(any(), anyInt(), anyInt(), any()))
+				.thenReturn(emptyPage);
 
 		mockMvc.perform(get("/hotels"))
 				.andExpect(status().isOk())
-				.andExpect(content().json("[]"));
+				.andExpect(jsonPath("$.content").isArray())
+				.andExpect(jsonPath("$.content").isEmpty());
 	}
 
 	@Test

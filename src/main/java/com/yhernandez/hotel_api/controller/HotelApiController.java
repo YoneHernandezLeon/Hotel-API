@@ -1,8 +1,8 @@
 package com.yhernandez.hotel_api.controller;
 
-import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -45,8 +45,13 @@ public class HotelApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HotelEntity>> listHotels(@RequestParam(required = false) String city) {
-        List<HotelEntity> hotels = hotelApiService.listHotels(city);
+    public ResponseEntity<Page<HotelEntity>> listHotels(
+            @RequestParam(required = false) String city,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name,asc") String[] sort) {
+
+        Page<HotelEntity> hotels = hotelApiService.listHotels(city, page, size, sort);
         return ResponseEntity.ok(hotels);
     }
 
