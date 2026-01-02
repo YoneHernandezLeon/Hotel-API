@@ -20,6 +20,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 @WebMvcTest(HotelApiController.class)
 public class HotelApiControllerTest {
 
@@ -73,10 +75,11 @@ public class HotelApiControllerTest {
 	void shouldListHotels() throws Exception {
 
 		when(hotelApiService.listHotels(any()))
-				.thenReturn(null);
+				.thenReturn(List.of());
 
 		mockMvc.perform(get("/hotels"))
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andExpect(content().json("[]"));
 	}
 
 	@Test
