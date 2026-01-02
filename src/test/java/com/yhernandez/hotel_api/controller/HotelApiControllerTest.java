@@ -46,7 +46,7 @@ public class HotelApiControllerTest {
 				}
 				""";
 
-		HotelEntity createdHotel = new HotelEntity(null,
+		HotelEntity createdHotel = new HotelEntity(1L,
 				"Hotel Gran Canaria",
 				5,
 				"Av. de Las Canteras 123",
@@ -94,7 +94,7 @@ public class HotelApiControllerTest {
 				}
 				""";
 
-		HotelEntity updatedHotel = new HotelEntity(null,
+		HotelEntity updatedHotel = new HotelEntity(1L,
 				"Hotel Gran Canaria",
 				5,
 				"Av. de Las Canteras 123",
