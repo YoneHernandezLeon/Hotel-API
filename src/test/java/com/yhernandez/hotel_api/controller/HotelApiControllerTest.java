@@ -20,113 +20,111 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Map;
-
 @WebMvcTest(HotelApiController.class)
 public class HotelApiControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @MockitoBean
-    private HotelApiService hotelApiService;
+	@MockitoBean
+	private HotelApiService hotelApiService;
 
-    @Test
-    void shouldCreateHotel() throws Exception {
-        String body = """
-                {
-                "name": "Hotel Gran Canaria",
-                "stars": 5,
-                "address": {
-                    "street": "Av. de Las Canteras 123",
-                    "city": "Las Palmas de Gran Canaria",
-                    "country": "España",
-                    "zipCode": "35010"
-                    }
-                }
-                """;
+	@Test
+	void shouldCreateHotel() throws Exception {
+		String body = """
+				{
+				"name": "Hotel Gran Canaria",
+				"stars": 5,
+				"address": {
+				    "street": "Av. de Las Canteras 123",
+				    "city": "Las Palmas de Gran Canaria",
+				    "country": "España",
+				    "zipCode": "35010"
+				    }
+				}
+				""";
 
-        HotelEntity createdHotel = new HotelEntity(null,
-                "Hotel Gran Canaria",
-                5,
-                "Av. de Las Canteras 123",
-                "Las Palmas de Gran Canaria",
-                "España",
-                "35010");
+		HotelEntity createdHotel = new HotelEntity(null,
+				"Hotel Gran Canaria",
+				5,
+				"Av. de Las Canteras 123",
+				"Las Palmas de Gran Canaria",
+				"España",
+				"35010");
 
-        String responseBody = """
-                {
-                    "hotel_name": "Hotel Gran Canaria",
-                    "id": "1"
-                }
-                """;
+		String responseBody = """
+				{
+				    "hotel_name": "Hotel Gran Canaria",
+				    "id": "1"
+				}
+				""";
 
-        when(hotelApiService.createHotel(any()))
-                .thenReturn(createdHotel);
+		when(hotelApiService.createHotel(any()))
+				.thenReturn(createdHotel);
 
-        mockMvc.perform(post("/hotels")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().json(responseBody));
-    }
+		mockMvc.perform(post("/hotels")
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isCreated())
+				.andExpect(content().json(responseBody));
+	}
 
-    @Test
-    void shouldListHotels() throws Exception {
+	@Test
+	void shouldListHotels() throws Exception {
 
-        when(hotelApiService.listHotels(any()))
-                .thenReturn(null);
+		when(hotelApiService.listHotels(any()))
+				.thenReturn(null);
 
-        mockMvc.perform(get("/hotels"))
-                .andExpect(status().isOk());
-    }
+		mockMvc.perform(get("/hotels"))
+				.andExpect(status().isOk());
+	}
 
-    @Test
-    void shouldUpdateHotel() throws Exception {
+	@Test
+	void shouldUpdateHotel() throws Exception {
 
-        String body = """
-                {
-                    "street": "Av. de Las Canteras 123",
-                    "city": "Las Palmas de Gran Canaria",
-                    "country": "España",
-                    "zipCode": "35010"
-                }
-                """;
+		String body = """
+				{
+				    "street": "Av. de Las Canteras 123",
+				    "city": "Las Palmas de Gran Canaria",
+				    "country": "España",
+				    "zipCode": "35010"
+				}
+				""";
 
-        HotelEntity updatedHotel = new HotelEntity(null,
-                "Hotel Gran Canaria",
-                5,
-                "Av. de Las Canteras 123",
-                "Las Palmas de Gran Canaria",
-                "España",
-                "35010");
+		HotelEntity updatedHotel = new HotelEntity(null,
+				"Hotel Gran Canaria",
+				5,
+				"Av. de Las Canteras 123",
+				"Las Palmas de Gran Canaria",
+				"España",
+				"35010");
 
-        String responseBody = """
-                {
-                    "id": "1",
-                    "new_street": "Av. de Las Canteras 123",
-                    "new_city": "Las Palmas de Gran Canaria",
-                    "new_country": "España",
-                    "new_zipCode": "35010"
-                }
-                """;
+		String responseBody = """
+				{
+				    "id": "1",
+				    "new_street": "Av. de Las Canteras 123",
+				    "new_city": "Las Palmas de Gran Canaria",
+				    "new_country": "España",
+				    "new_zipCode": "35010"
+				}
+				""";
 
-        when(hotelApiService.updateHotelAddress(any(), any()))
-                .thenReturn(updatedHotel);
+		when(hotelApiService.updateHotelAddress(any(), any()))
+				.thenReturn(updatedHotel);
 
-        mockMvc.perform(patch("/hotels/1")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(responseBody));
-    }
+		mockMvc.perform(patch("/hotels/1")
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json(responseBody));
+	}
 
-    @Test
-    void shouldDeleteHotel() throws Exception {
+	@Test
+	void shouldDeleteHotel() throws Exception {
 
-        doNothing().when(hotelApiService).deleteHotel(1L);
+		doNothing().when(hotelApiService).deleteHotel(1L);
 
-        mockMvc.perform(delete("/hotels/1"))
-                .andExpect(status().isNoContent());
-    }
+		mockMvc.perform(delete("/hotels/1"))
+				.andExpect(status().isNoContent());
+	}
 }
