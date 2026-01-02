@@ -1,7 +1,9 @@
 package com.yhernandez.hotel_api.services;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.yhernandez.hotel_api.dto.AddressDTO;
@@ -30,11 +32,15 @@ public class HotelApiService {
 		return hotelApiRepository.save(hotel);
 	}
 
-	public List<HotelEntity> listHotels(String city) {
+	public Page<HotelEntity> listHotels(String city, int page, int size, String[] sort) {
+		
+		Sort.Direction direction = Sort.Direction.fromString(sort[1]);
+		Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort[0]));
+		
 		if (city == null || city.isBlank()) {
-			return hotelApiRepository.findAll();
+			return hotelApiRepository.findAll(pageable);
 		}
-		return hotelApiRepository.findByCityIgnoreCase(city);
+		return hotelApiRepository.findByCityIgnoreCase(city, pageable);
 	}
 
 	public HotelEntity updateHotelAddress(Long hotelId, AddressDTO dto) {
