@@ -19,19 +19,16 @@ public class HotelApiService {
 
     private final HotelApiRepository hotelApiRepository;
 
-    public Map<String, String> createHotel(CreateHotelDTO dto) {
-        HotelEntity hotel = new HotelEntity(null, dto.getName(),
+    public HotelEntity createHotel(CreateHotelDTO dto) {
+        HotelEntity hotel = new HotelEntity(null,
+                dto.getName(),
                 dto.getStars(),
                 dto.getAddress().getStreet(),
                 dto.getAddress().getCity(),
                 dto.getAddress().getCountry(),
                 dto.getAddress().getZipCode());
 
-        HotelEntity savedHotel = hotelApiRepository.save(hotel);
-
-        return Map.of(
-                "id", savedHotel.getId().toString(),
-                "hotel_name", savedHotel.getName());
+        return hotelApiRepository.save(hotel);
     }
 
     public List<HotelEntity> listHotels(String city) {
@@ -41,7 +38,7 @@ public class HotelApiService {
         return hotelApiRepository.findByCityIgnoreCase(city);
     }
 
-    public Map<String, String> updateHotelAddress(Long hotelId, AddressDTO dto) {
+    public HotelEntity updateHotelAddress(Long hotelId, AddressDTO dto) {
         HotelEntity hotel = hotelApiRepository.findById(hotelId)
                 .orElseThrow(() -> new EntityNotFoundException("Hotel not found"));
 
@@ -50,17 +47,10 @@ public class HotelApiService {
         hotel.setCountry(dto.getCountry());
         hotel.setZipCode(dto.getZipCode());
 
-        HotelEntity savedHotel = hotelApiRepository.save(hotel);
-        return Map.of(
-            "id", savedHotel.getId().toString(),
-            "new_street", savedHotel.getStreet(),
-            "new_city", savedHotel.getCity(),
-            "new_country", savedHotel.getCountry(),
-            "new_zipCode", savedHotel.getZipCode()
-        );
+        return hotelApiRepository.save(hotel);
     }
 
-    public void deleteHotel(Long id){
+    public void deleteHotel(Long id) {
         if (!hotelApiRepository.existsById(id)) {
             throw new EntityNotFoundException("Hotel not found");
         }

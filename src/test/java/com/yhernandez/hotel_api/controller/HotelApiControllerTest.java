@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.yhernandez.hotel_api.entity.HotelEntity;
 import com.yhernandez.hotel_api.services.HotelApiService;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,6 +46,14 @@ public class HotelApiControllerTest {
                 }
                 """;
 
+        HotelEntity createdHotel = new HotelEntity(null,
+                "Hotel Gran Canaria",
+                5,
+                "Av. de Las Canteras 123",
+                "Las Palmas de Gran Canaria",
+                "España",
+                "35010");
+
         String responseBody = """
                 {
                     "hotel_name": "Hotel Gran Canaria",
@@ -53,9 +62,7 @@ public class HotelApiControllerTest {
                 """;
 
         when(hotelApiService.createHotel(any()))
-                .thenReturn(Map.of(
-                        "id", "1",
-                        "hotel_name", "Hotel Gran Canaria"));
+                .thenReturn(createdHotel);
 
         mockMvc.perform(post("/hotels")
                 .content(body)
@@ -86,6 +93,14 @@ public class HotelApiControllerTest {
                 }
                 """;
 
+        HotelEntity updatedHotel = new HotelEntity(null,
+                "Hotel Gran Canaria",
+                5,
+                "Av. de Las Canteras 123",
+                "Las Palmas de Gran Canaria",
+                "España",
+                "35010");
+
         String responseBody = """
                 {
                     "id": "1",
@@ -97,12 +112,7 @@ public class HotelApiControllerTest {
                 """;
 
         when(hotelApiService.updateHotelAddress(any(), any()))
-                .thenReturn(Map.of(
-                        "id", "1",
-                        "new_street", "Av. de Las Canteras 123",
-                        "new_city", "Las Palmas de Gran Canaria",
-                        "new_country", "España",
-                        "new_zipCode", "35010"));
+                .thenReturn(updatedHotel);
 
         mockMvc.perform(patch("/hotels/1")
                 .content(body)

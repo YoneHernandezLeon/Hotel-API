@@ -35,8 +35,13 @@ public class HotelApiController {
     @PostMapping
     public ResponseEntity<Map<String, String>> createHotel(@Valid @RequestBody CreateHotelDTO dto) {
 
-        Map<String, String> createdHotel = hotelApiService.createHotel(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdHotel);
+        HotelEntity createdHotel = hotelApiService.createHotel(dto);
+
+        Map<String, String> resposeBody = Map.of(
+                "id", createdHotel.getId().toString(),
+                "hotel_name", createdHotel.getName());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposeBody);
     }
 
     @GetMapping
@@ -50,22 +55,28 @@ public class HotelApiController {
             @Valid @RequestBody AddressDTO dto) {
 
         try {
-            Map<String, String> updatedHotel = hotelApiService.updateHotelAddress(id, dto);
-            return ResponseEntity.ok(updatedHotel);
+            HotelEntity updatedHotel = hotelApiService.updateHotelAddress(id, dto);
+            Map<String, String> responseBody = Map.of(
+                    "id", updatedHotel.getId().toString(),
+                    "new_street", updatedHotel.getStreet(),
+                    "new_city", updatedHotel.getCity(),
+                    "new_country", updatedHotel.getCountry(),
+                    "new_zipCode", updatedHotel.getZipCode());
+            return ResponseEntity.ok(responseBody);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHotel(@PathVariable Long id){
-        
+    public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
+
         try {
             hotelApiService.deleteHotel(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        
+
     }
 }
