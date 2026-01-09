@@ -1,6 +1,6 @@
-# 🌐 API Backend -- Spring Boot
+# 🌐 Hotel API Backend -- Spring Boot
 
-Documentación completa y estilizada de la API del backend, disponible en
+Documentación completa y estilizada de la Hotel API del backend, disponible en
 **español** e **inglés**.
 
 ------------------------------------------------------------------------
